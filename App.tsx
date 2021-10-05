@@ -47,7 +47,7 @@ breaking down use state hooks:
      * 1-enteredGoal will be returned to the setCourseGoals so courseGoals=enteredGaol[0]
      * 2-a new enteredGoal has been entered so thats passed to courseGoals again
      * 3-currentGoal would receive the aggregated values of all the goals
-     * 4-so we receive the present value (aggregated former values of courseGoals) + t he new value every time
+     * 4-so we receive the present value (aggregated former values of courseGoals) + the new value every time
      */
     setCourseGoals((currentGoal) => [
       ...currentGoal,
@@ -57,7 +57,10 @@ breaking down use state hooks:
       },
     ]); //flatLists require keys/objects
     setEnterGoal(false)
-    
+
+  };
+  const cancelGoalAddition=()=>{
+    setEnterGoal(false);
   };
 
   const removeGoalHandler=(goalId:String) =>{
@@ -76,7 +79,11 @@ breaking down use state hooks:
   return (
     <View style={styles.screen}>
       <Button  title="Enter Goals" onPress={()=>setEnterGoal(true)} />
-      <GoalInput visible={EnterGoal} onAddGoal={addGoalHandler}/>
+      <GoalInput 
+        visible={EnterGoal} 
+        onAddGoal={addGoalHandler}
+        onCancel={cancelGoalAddition}
+        />{/**we pass the addGoalHandler function to the component */}
       {/**FlatList expects an object with a .key property; if we dont wanna use key, we'd need to use the key extractor prop */}
       <FlatList
         keyExtractor={(item, index) => item.id}
@@ -84,7 +91,11 @@ breaking down use state hooks:
         renderItem={(itemData) => <GoalItem  
           onDelete={()=>removeGoalHandler(itemData.item.id)} 
           title={itemData.item.value} />}
-      />
+      />{/*
+      *All the states are mananged/implemented in app.tsx but are passed to components as props
+      *Funtions are passed to components as props.function_name
+      *Flatlist can contain components
+      */}
     </View>
   );
 }

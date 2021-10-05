@@ -5,11 +5,19 @@ const GoalInput=(props:any)=>{
     const [enteredGoal, setEnteredGoal] = useState("");
     
     const inputHandler_Goal = (enteredText: any) => {
-        setEnteredGoal(enteredText);
+      setEnteredGoal(enteredText);
       }; //two way data binding
+
+    const addGoalHandler=()=>{
+      props.onAddGoal(enteredGoal);
+      setEnteredGoal('')
+
+    };
+
+
     return (
         <Modal visible={props.visible} animationType= "slide">
-            <View style={styles.inputContainer}>
+          <View style={styles.inputContainer}>
             {/*in react native, flexbox is triggered by default; layout is by default horizontal; use flex direction to change this
             * Main axis depends on the flexDirection chosen (including direction)
             * Child elements would be organized around the mani axis
@@ -18,12 +26,16 @@ const GoalInput=(props:any)=>{
             * alignItems positions elements along the cross axis (perpendicular to main axis)
             */}
             <TextInput
-            placeholder=" Course Goals"
-            style={styles.textInput}
-            onChangeText={inputHandler_Goal}
-            value={enteredGoal}
+              placeholder=" Course Goals"
+              style={styles.textInput}
+              onChangeText={inputHandler_Goal}
+              value={enteredGoal}
             />
-            <Button title="Add" onPress={()=>props.onAddGoal(enteredGoal)} />
+            <View style={styles.buttonStack}>
+              
+              <Button title="Cancel" color='red' onPress={props.onCancel}/>
+              <Button title="Add" onPress={addGoalHandler} />
+            </View>
         </View>
       </Modal>
     )
@@ -46,17 +58,27 @@ const GoalInput=(props:any)=>{
 const styles=StyleSheet.create({
     inputContainer: {
         justifyContent: "center",
-        alignItems: "center",
         flex:1,
-        marginBottom:10
+        alignItems:'center'
       },//flex tells the flexbox (view) how much space to take; 
       //view  only takes the space its children needs
       //flex takes proportional space (doesnt have to be 1)
       textInput: {
-        borderBottomColor: "black",
+        borderColor: "black",
         borderWidth: 1,
         width: "80%",
+        marginBottom:10,
+        padding:10
       },
+      buttonStack:{
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      },
+      button:{
+        flex:1
+      }
 });
 
 export default GoalInput;
