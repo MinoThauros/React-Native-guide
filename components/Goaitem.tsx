@@ -4,7 +4,7 @@ const GoalItem= (props:any) =>{
     return (
     <TouchableOpacity onPress={props.onDelete}>
         <View style={styles.listItem}>
-            <Text>{props.title}</Text>
+            <Text style={styles.goalText}>{props.title}</Text>
         </View>
     </TouchableOpacity>
     )
@@ -13,11 +13,20 @@ const GoalItem= (props:any) =>{
 
 const styles=StyleSheet.create({
     listItem: {
-        padding: 10,
-        backgroundColor: "#ccc",
+        padding: 8,
+        backgroundColor: "#5e0acc",
         borderBottomColor: "black",
         borderWidth: 1,
-        marginVertical: 6,
-}});
+        marginVertical: 1,
+        borderRadius: 6, 
+        margin:8,
+        },
+
+    goalText:{
+        color:'white'
+    }
+    //text element does not take in rounded corners in iOS
+    
+    });
 
 export default GoalItem;

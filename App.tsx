@@ -8,6 +8,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  ImageBackground
 } from "react-native";
 
 import GoalItem from "./components/Goaitem";
@@ -32,7 +33,7 @@ breaking down use state hooks:
     +we provide an array of states; the first one being the default one
     +to trigger a state change, we simply reassingn the second element of usestate's value  
  */
- 
+  const image = { uri: "https://reactjs.org/logo-og.png" };
   const [courseGoals, setCourseGoals] = useState([] as any[]);
   const [EnterGoal, setEnterGoal]=useState(false);
 
@@ -84,17 +85,18 @@ breaking down use state hooks:
 
   return (
     <View style={styles.screen}>
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}/>
       <Button  title="Enter Goals" onPress={()=>setEnterGoal(true)} />
       <View>
-      <GoalInput 
+        <GoalInput 
 
-        visible={EnterGoal} 
-        onAddGoal={addGoalHandler}
-        onCancel={cancelGoalAddition}//injecting the props for the component; since functions are first class obj
-      />
+          visible={EnterGoal} 
+          onAddGoal={addGoalHandler}
+          onCancel={cancelGoalAddition}//injecting the props for the component; since functions are first class obj
+        />
       </View>
-{/**we pass the addGoalHandler function to the component */}
-      {/**FlatList expects an object with a .key property; if we dont wanna use key, we'd need to use the key extractor prop */}
+        {/**we pass the addGoalHandler function to the component */}
+              {/**FlatList expects an object with a .key property; if we dont wanna use key, we'd need to use the key extractor prop */}
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
@@ -108,7 +110,7 @@ breaking down use state hooks:
       *itemData is return from data prop of FlatList and then rendered by being passed down to the component
       */}
       {/**
-       * We could have used coursGoals.map((goal)=><Text >{goal}</Text>) where goal will be sent as an anonymous fct input
+       * We could have used coursGoals.map((goal)=><Text >{goal}</Text>) where goal (every element of courseGoals) will be sent as an anonymous fct input
        */}
     </View>
   );
@@ -127,4 +129,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 6,
   },
-});
+  image: {
+ flex: 1,
+    resizeMode: 'cover',
+  
+  }}
+);

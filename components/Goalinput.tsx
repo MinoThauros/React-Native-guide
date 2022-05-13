@@ -57,19 +57,23 @@ const GoalInput=(props:any)=>{
     
 const styles=StyleSheet.create({
     inputContainer: {
+        //flexDirection:"row", column is the default
         padding:50,
         justifyContent: "center",
         flex:1,
-        alignItems:'center'
+        alignItems:'center',
+        
       },//flex tells the flexbox (view) how much space to take; 
       //view  only takes the space its children needs
       //flex takes proportional space (doesnt have to be 1)
       textInput: {
         borderColor: "black",
         borderWidth: 1,
-        width: "80%",
+        width: "90%",
         marginBottom:10,
-        padding:10
+        padding:10,
+        borderRadius: 10, 
+
       },
       buttonStack:{
         flex: 1,
