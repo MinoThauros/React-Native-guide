@@ -13,19 +13,20 @@ const GoalItem= (props:any) =>{
 
 const styles=StyleSheet.create({
     listItem: {
-        padding: 8,
+        padding: 6,
         backgroundColor: "#5e0acc",
         borderBottomColor: "black",
         borderWidth: 1,
-        marginVertical: 1,
+        marginVertical: 5,
         borderRadius: 6, 
-        margin:8,
+        //margin:8,
         },
 
     goalText:{
         color:'white'
     }
     //text element does not take in rounded corners in iOS
+    //alignItem organizes elements on the cross axis
     
     });
 

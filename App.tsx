@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import {
   Button,
   StyleSheet,
-  Text,
   View,
-  TextInput,
-  ScrollView,
   FlatList,
   ImageBackground
 } from "react-native";
@@ -97,13 +94,17 @@ breaking down use state hooks:
       </View>
         {/**we pass the addGoalHandler function to the component */}
               {/**FlatList expects an object with a .key property; if we dont wanna use key, we'd need to use the key extractor prop */}
+
+      <View style={styles.listZone}>
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
         renderItem={(itemData) => <GoalItem  
           onDelete={()=>removeGoalHandler(itemData.item.id)} 
           title={itemData.item.value} />}
-      />{/*
+      />
+        </View>
+{/*
       *All the states are mananged/implemented in app.tsx but are passed to components as props
       *Funtions are passed to components as props.function_name
       *Flatlist can contain components
@@ -133,5 +134,11 @@ const styles = StyleSheet.create({
  flex: 1,
     resizeMode: 'cover',
   
-  }}
+  },
+  listZone:{
+    paddingTop:20,
+    width: "100%"
+  }
+
+}
 );
