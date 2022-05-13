@@ -57,6 +57,7 @@ const GoalInput=(props:any)=>{
     
 const styles=StyleSheet.create({
     inputContainer: {
+        padding:50,
         justifyContent: "center",
         flex:1,
         alignItems:'center'

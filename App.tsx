@@ -12,6 +12,7 @@ import {
 
 import GoalItem from "./components/Goaitem";
 import GoalInput from "./components/Goalinput";
+
 export default function App() {
   //functional component
   {
@@ -39,6 +40,7 @@ breaking down use state hooks:
   const addGoalHandler = (goalTitle:any) => {
     console.log(goalTitle);
     //setCourseGoals([...courseGoals, enteredGoal]); somehow bad implementation
+    //==> we're using the return of an arrow function since flatlist requires a key:value pair
     //we are trying to get the latest input in; function is triggered on click so no input
     //courseGoals will always take the former value of setCourseGoals
     //we simply pass the old values to courseGoals
@@ -55,8 +57,12 @@ breaking down use state hooks:
         id: Math.random().toString(),
         value: goalTitle,
       },
-    ]); //flatLists require keys/objects
+      //better (recommended) than a setCourseGoals([...courseGoals, enteredGoal]) implementation to append new element
+    ]); //flatLists require keys/objects;
+    // we aggregate the former values of courseGoals and add the new one
+    // {useState}   can take in array
     setEnterGoal(false)
+    //the state can be toggled by calling the correct useState within the file
 
   };
   const cancelGoalAddition=()=>{
@@ -67,7 +73,7 @@ breaking down use state hooks:
     //we'll apply changes to the array countaining the goals
     setCourseGoals((currentGoals)=>{
       return currentGoals.filter((goal)=> goal.id !== goalId);//filter yields a new array based on a certain criteria 
-    })//filter syntax here; we pass the condition on which to drop elements
+    })//filter syntax here; we only keep the elements which satisfy the condition
     //the function would receive the id and then drop the element based on the id
   }
   /**
@@ -79,11 +85,15 @@ breaking down use state hooks:
   return (
     <View style={styles.screen}>
       <Button  title="Enter Goals" onPress={()=>setEnterGoal(true)} />
+      <View>
       <GoalInput 
+
         visible={EnterGoal} 
         onAddGoal={addGoalHandler}
-        onCancel={cancelGoalAddition}
-        />{/**we pass the addGoalHandler function to the component */}
+        onCancel={cancelGoalAddition}//injecting the props for the component; since functions are first class obj
+      />
+      </View>
+{/**we pass the addGoalHandler function to the component */}
       {/**FlatList expects an object with a .key property; if we dont wanna use key, we'd need to use the key extractor prop */}
       <FlatList
         keyExtractor={(item, index) => item.id}
@@ -95,7 +105,11 @@ breaking down use state hooks:
       *All the states are mananged/implemented in app.tsx but are passed to components as props
       *Funtions are passed to components as props.function_name
       *Flatlist can contain components
+      *itemData is return from data prop of FlatList and then rendered by being passed down to the component
       */}
+      {/**
+       * We could have used coursGoals.map((goal)=><Text >{goal}</Text>) where goal will be sent as an anonymous fct input
+       */}
     </View>
   );
 }
@@ -103,6 +117,8 @@ const styles = StyleSheet.create({
   //creates a JS object
   screen: {
     padding: 50,
+    paddingTop:50,
+    flexDirection:"column"
   },
   listItem: {
     padding: 10,
